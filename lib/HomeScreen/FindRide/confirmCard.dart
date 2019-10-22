@@ -55,6 +55,30 @@ class _ConfirmCardState extends State<ConfirmCard> {
     });
   }
 
+
+  //handle bad request
+  void handleBadRequest() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Oops! Please try again"),
+          content: Text("Please select a destination before confirming ride."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -106,7 +130,9 @@ class _ConfirmCardState extends State<ConfirmCard> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: RaisedButton(
-                  onPressed: () => _confirmRide(context),
+                  onPressed: widget.location == ""?
+                  () => handleBadRequest():
+                  () => _confirmRide(context),
                   child: Center(
                     child: Text(
                       "Confirm Ride",
