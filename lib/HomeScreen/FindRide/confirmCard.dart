@@ -46,7 +46,7 @@ class _ConfirmCardState extends State<ConfirmCard> {
           color: Colors.white,
         ),
       ),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 4),
     );
 
     Timer(Duration(seconds: 3), () {
@@ -82,6 +82,7 @@ class _ConfirmCardState extends State<ConfirmCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height/2,
       padding: EdgeInsets.all(10.0),
       color: Colors.black,
       child: Center(
@@ -94,10 +95,18 @@ class _ConfirmCardState extends State<ConfirmCard> {
           ListTile(
             leading: Icon(
               Icons.location_on,
-              color: Colors.black,
+              color: Colors.white,
             ),
-            title: Text("Model Engineering College"),
-            subtitle: Text("Thrikkakara"),
+            title: Text("Model Engineering College",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            subtitle: Text("Thrikkakara",
+            style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -113,12 +122,24 @@ class _ConfirmCardState extends State<ConfirmCard> {
           ListTile(
             leading: Icon(
               Icons.location_on,
-              color: Colors.black,
+              color: Colors.white,
             ),
             title: widget.location == ""
-                ? Text("Destination not selected")
-                : Text(widget.location),
-            subtitle: Text(widget.time.toString()),
+                ? Text("Destination not selected",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )
+                : Text(widget.location,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+            subtitle: Text(widget.time.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+            ),
           ),
           SizedBox(
             height: 40.0,
