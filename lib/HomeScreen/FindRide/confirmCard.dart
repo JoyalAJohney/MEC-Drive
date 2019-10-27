@@ -18,25 +18,31 @@ class ConfirmCard extends StatefulWidget {
 class _ConfirmCardState extends State<ConfirmCard> {
 
   //send ride request to server
-  void postData() async {
+  void postData(SnackBar snack) async {
 
-    HttpClient client = HttpClient();
-    client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-
-    String url = 'https://192.168.0.103:8000/api/request';
+    String url = "http://192.168.0.103:8000/api/request/";
     Map<String,String> rideRequest = {
       'userId'  : '101',
       'location': widget.location,
       'time'    : widget.time.toString(),
     };
 
-    HttpClientRequest request = await client.postUrl(Uri.parse(url));
-    request.headers.set('content-type', 'application/json');
-    request.add(utf8.encode(json.encode(rideRequest)));
+    //test code -- working 
+    http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(rideRequest)
+    ).then((response) {
+      final Map<String,dynamic> responseData = json.decode(response.body);
+      print(responseData);
 
-    HttpClientResponse response = await request.close();
-    String reply = await response.transform(utf8.decoder).join();
-    print(reply);
+      //revert back once response is obtained
+      Timer(Duration(seconds: 3), () {
+        Navigator.pop(context);
+        Navigator.pop(context,snack);
+      });
+      
+    });
 
   }
 
@@ -61,7 +67,8 @@ class _ConfirmCardState extends State<ConfirmCard> {
       ),
     );
     showDialog(
-        context: context, builder: (BuildContext context) => alertDialog);
+      context: context, builder: (BuildContext context) => alertDialog
+    );
 
     // Snackbar
     final snack = SnackBar(
@@ -75,24 +82,9 @@ class _ConfirmCardState extends State<ConfirmCard> {
       duration: Duration(seconds: 4),
     );
 
-
     //send request to server
-    postData();
-    // final response = await http.post(
-    //   'https://192.168.0.103:8000/api/request/',
-    //   body: jsonEncode({
-    //     'userId'  : '101',
-    //     'location': widget.location,
-    //     'time'    : widget.time.toString(),
-    //   }),
-    //   headers: {'Content-Type':"application/json"},
-    // );
+    postData(snack);
 
-
-    Timer(Duration(seconds: 3), () {
-      Navigator.pop(context);
-      Navigator.pop(context,snack);
-    });
   }
 
 
