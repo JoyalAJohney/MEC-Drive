@@ -18,14 +18,15 @@ class _RideRequestListState extends State<RideRequestList> {
         onTap: (){
           showModalBottomSheet(
             context: context,
-            builder: (context) => AcceptCard()
+            builder: (context) => AcceptCard(),
           );
         },
         child: Container(
           padding: EdgeInsets.all(5.0),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage("assets/elon.jpg"),
+              backgroundImage: AssetImage("assets/accountAvatar.jpg"),
+              radius: 25,
             ),
             title: Text("Destination"),
             subtitle: Text("Time: 5PM"),
@@ -34,7 +35,9 @@ class _RideRequestListState extends State<RideRequestList> {
                 Icons.check_circle,
                 color: Colors.green,
               ) : 
-              null,
+              Icon(
+                Icons.info,
+              ),
           ),
         ),
       ),

@@ -41,9 +41,9 @@ class NotRegistered extends StatelessWidget {
               "Oops! You have no Car/Bike registred",
               style: TextStyle(color: Colors.grey, fontSize: 16.0),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: RaisedButton(
                 onPressed: () {},
                 splashColor: Colors.grey,

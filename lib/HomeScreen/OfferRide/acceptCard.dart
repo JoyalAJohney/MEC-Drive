@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:mecdrive_app/HomeScreen/OfferRide/setPrice.dart';
 
 class AcceptCard extends StatefulWidget {
   @override
@@ -7,10 +7,14 @@ class AcceptCard extends StatefulWidget {
 }
 
 class _AcceptCardState extends State<AcceptCard> {
+
+  String price = "0.0";
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.redAccent,
+      color: Colors.black,
+      height: MediaQuery.of(context).size.height/2,
       padding: EdgeInsets.all(20),
       child: Column(
         children: <Widget>[
@@ -20,14 +24,20 @@ class _AcceptCardState extends State<AcceptCard> {
             // color: Colors.blueAccent,
             child: ListTile(
               leading: CircleAvatar(
-                backgroundImage: AssetImage("assets/elon.jpg"),
+                backgroundImage: AssetImage("assets/accountAvatar.jpg"),
               ),
-              title: Text("Name of User"),
+              title: Text("Name of User",style: TextStyle(
+                color: Colors.white
+              ),),
               subtitle: Row(
                 children: <Widget>[
-                  Text("Branch: CSA"),
+                  Text("Branch: CSA",style: TextStyle(
+                    color: Colors.white,
+                  ),),
                   SizedBox(width: 5),
-                  Text("Year: 3"),
+                  Text("Year: 3",style: TextStyle(
+                    color: Colors.white,
+                  ),),
                 ],
               ),
             ),
@@ -36,34 +46,54 @@ class _AcceptCardState extends State<AcceptCard> {
           Container(
             // color: Colors.cyan,
             child: ListTile(
-              leading: Icon(Icons.location_on),
-              title: Text("Destination"),
-              subtitle: Text("Time : 5AM"),
+              leading: Icon(Icons.location_on,color: Colors.white,),
+              title: Text("Destination",style: TextStyle(
+                color: Colors.white,
+              ),),
+              subtitle: Text("Time : 5AM",style: TextStyle(
+                color: Colors.white,
+              ),),
             ),
           ),
           //Set Price
           Container(
             // color: Colors.greenAccent,
             child: ListTile(
-              // leading: Icon(Icons.monetization_on,color: Colors.green,),
-              title: RaisedButton(
-                color: Colors.green,
-                textColor: Colors.white,
+              leading: Icon(Icons.monetization_on,color: Colors.white,),
+              title: Text(
+                price.toString() + " Rs",
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: FlatButton(
+                color: Colors.black,
+                textColor: Colors.green,
                 child: Text("Set Price"),
-                onPressed: () {},
+                onPressed: (){
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => SetPrice()
+                  ).then((newPrice) {
+                    print(newPrice);
+                    setState(() {
+                     price = newPrice; 
+                    });
+                  });
+                },
               ),
             ),
           ),
           SizedBox(height: 40),
           SizedBox(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width/1.5,
             child: RaisedButton(
+              padding: EdgeInsets.all(10),
               elevation: 3,
-              splashColor: Colors.greenAccent,
               color: Colors.green,
               textColor: Colors.white,
               child: Text("Accept Ride",style: TextStyle(
-                fontSize: 17
+                fontSize: 18,
+                // fontWeight: FontWeight.bold,
               ),),
               onPressed: () {},
             ),
