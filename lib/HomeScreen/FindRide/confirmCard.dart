@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
 
 class ConfirmCard extends StatefulWidget {
@@ -12,10 +16,32 @@ class ConfirmCard extends StatefulWidget {
 }
 
 class _ConfirmCardState extends State<ConfirmCard> {
-  String status = "booking";
 
-  // Send ride request to server
-  void _confirmRide(BuildContext context) {
+  //send ride request to server
+  void postData() async {
+
+    HttpClient client = HttpClient();
+    client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
+
+    String url = 'https://192.168.0.103:8000/api/request';
+    Map<String,String> rideRequest = {
+      'userId'  : '101',
+      'location': widget.location,
+      'time'    : widget.time.toString(),
+    };
+
+    HttpClientRequest request = await client.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    request.add(utf8.encode(json.encode(rideRequest)));
+
+    HttpClientResponse response = await request.close();
+    String reply = await response.transform(utf8.decoder).join();
+    print(reply);
+
+  }
+
+
+  void _confirmRide(BuildContext context) async {
     // alertbox
     final alertDialog = AlertDialog(
       content: Row(
@@ -48,6 +74,20 @@ class _ConfirmCardState extends State<ConfirmCard> {
       ),
       duration: Duration(seconds: 4),
     );
+
+
+    //send request to server
+    postData();
+    // final response = await http.post(
+    //   'https://192.168.0.103:8000/api/request/',
+    //   body: jsonEncode({
+    //     'userId'  : '101',
+    //     'location': widget.location,
+    //     'time'    : widget.time.toString(),
+    //   }),
+    //   headers: {'Content-Type':"application/json"},
+    // );
+
 
     Timer(Duration(seconds: 3), () {
       Navigator.pop(context);
