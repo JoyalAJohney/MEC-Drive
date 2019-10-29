@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ConfirmCard extends StatefulWidget {
   final String location;
   final TimeOfDay time;
@@ -18,9 +20,11 @@ class _ConfirmCardState extends State<ConfirmCard> {
   //send ride request to server
   void postData(SnackBar snack) async {
 
-    String url = "http://192.168.0.103:8000/api/request/";
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    String url = "http://192.168.43.112:8000/api/request/";
     Map<String,String> rideRequest = {
-      'userId'  : '101',
+      'userId'  : pref.getString('token'),
       'location': widget.location,
       'time'    : widget.time.toString(),
     };
@@ -47,7 +51,7 @@ class _ConfirmCardState extends State<ConfirmCard> {
   }
 
 
-  void _confirmRide(BuildContext context) async {
+  void _confirmRide(BuildContext context) {
     
     // alertbox
     final alertDialog = AlertDialog(

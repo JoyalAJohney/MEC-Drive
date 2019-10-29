@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mecdrive_app/HomeScreen/OfferRide/setPrice.dart';
+import 'setPrice.dart';
 
 class AcceptCard extends StatefulWidget {
   @override

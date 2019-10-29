@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MecDrive',
       //test phase
-      home: SignUp(), 
+      home: HomeScreen(), 
       routes: {
         '/homescreen' : (context) => HomeScreen(),
       },

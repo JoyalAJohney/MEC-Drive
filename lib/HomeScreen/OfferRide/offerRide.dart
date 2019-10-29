@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'rideRequestList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'RideRequestScreen/rideRequestList.dart';
 
 class OfferRide extends StatefulWidget {
   @override
@@ -8,6 +9,23 @@ class OfferRide extends StatefulWidget {
 
 class _OfferRideState extends State<OfferRide> {
   bool carRegistered = true;
+
+  @override
+  void initState() {
+    super.initState();
+    //checks for what screen to be displayed
+    // screenCheck();
+  }
+
+  screenCheck() {
+    SharedPreferences.getInstance().then((pref) {
+      setState(() {
+        carRegistered = pref.getBool('carpool');        
+      });
+    }).catchError((e){
+      print(e);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

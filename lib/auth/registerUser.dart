@@ -95,22 +95,11 @@ class _SignUpState extends State<SignUp> {
       final Map<String,dynamic> responseData = json.decode(response.body);
       print(responseData);
 
+
       //set the unique id from response in sharedpreferences
       //set ifRegistered(bool)
       userRegistered(responseData);
 
-
-      //test to check shared preferences
-        SharedPreferences.getInstance().then((pref) {
-          print("\n\n");
-          print(pref.getString('token'));
-          print("\n");
-          print(pref.getBool('isLoggedIn'));
-          print("\n");
-          print(pref.getBool('carpool'));
-        }).catchError((e) {
-          print(e);
-        });
 
       // go to home screen
       Timer(Duration(seconds: 2), () {
