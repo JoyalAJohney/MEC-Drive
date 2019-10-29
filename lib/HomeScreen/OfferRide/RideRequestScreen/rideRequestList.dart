@@ -89,7 +89,8 @@ class _RideRequestListState extends State<RideRequestList> {
         onTap: (){
           showModalBottomSheet(
             context: context,
-            builder: (context) => AcceptCard(),
+            builder: (context) => 
+            AcceptCard(_requests[index].destination,_requests[index].time,_requests[index].requestedUserId)
           );
         },
         child: Container(

@@ -1,14 +1,47 @@
 import 'package:flutter/material.dart';
 import 'setPrice.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class AcceptCard extends StatefulWidget {
+
+  String destination;
+  String time;
+  String requestedUserId;
+  AcceptCard(this.destination,this.time,this.requestedUserId);
   @override
   _AcceptCardState createState() => _AcceptCardState();
 }
 
 class _AcceptCardState extends State<AcceptCard> {
-
   String price = "0.0";
+
+  String username = "";
+  String branch = "";
+  String year = "";
+ 
+  @override
+  void initState() {
+    super.initState();
+    //make a network call to get corresponding user details
+    getUserDetails();
+  }
+
+  getUserDetails() {
+    http.get("http://192.168.43.112:8000/api/user/info/"+ widget.requestedUserId).
+    then((response) {
+      print(response.body);
+      final Map<String,dynamic> user = json.decode(response.body);
+
+      setState(() {
+       username = user["name"];
+       branch = user["branch"];
+       year = user["year"]; 
+      });
+    }).catchError((e){
+      print(e);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +59,16 @@ class _AcceptCardState extends State<AcceptCard> {
               leading: CircleAvatar(
                 backgroundImage: AssetImage("assets/accountAvatar.jpg"),
               ),
-              title: Text("Name of User",style: TextStyle(
+              title: Text("Name: "+username,style: TextStyle(
                 color: Colors.white
               ),),
               subtitle: Row(
                 children: <Widget>[
-                  Text("Branch: CSA",style: TextStyle(
+                  Text("Branch: "+branch,style: TextStyle(
                     color: Colors.white,
                   ),),
                   SizedBox(width: 5),
-                  Text("Year: 3",style: TextStyle(
+                  Text("Year: "+year,style: TextStyle(
                     color: Colors.white,
                   ),),
                 ],
@@ -47,10 +80,10 @@ class _AcceptCardState extends State<AcceptCard> {
             // color: Colors.cyan,
             child: ListTile(
               leading: Icon(Icons.location_on,color: Colors.white,),
-              title: Text("Destination",style: TextStyle(
+              title: Text(widget.destination,style: TextStyle(
                 color: Colors.white,
               ),),
-              subtitle: Text("Time : 5AM",style: TextStyle(
+              subtitle: Text("Time : " + widget.time,style: TextStyle(
                 color: Colors.white,
               ),),
             ),
