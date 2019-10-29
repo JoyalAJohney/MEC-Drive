@@ -28,6 +28,7 @@ class _SignUpState extends State<SignUp> {
     prefs.setString('userPhone', phone);
     prefs.setString('userBranch', branch);
     prefs.setString('userYear', year);
+    prefs.setBool('isLoggedIn', false);
     if (carpool == 1)
       prefs.setBool('carpool', true);
     else
@@ -40,7 +41,7 @@ class _SignUpState extends State<SignUp> {
   //save user id from response in local storage
   void userRegistered(Map<String,dynamic> responseData) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString('token', responseData['_id']);
+    pref.setString('token', responseData['_id'].toString());
     pref.setBool('isLoggedIn', true);
 
     print("stored user id in local storage");
@@ -98,7 +99,20 @@ class _SignUpState extends State<SignUp> {
       //set ifRegistered(bool)
       userRegistered(responseData);
 
-      //go to home screen
+
+      //test to check shared preferences
+        SharedPreferences.getInstance().then((pref) {
+          print("\n\n");
+          print(pref.getString('token'));
+          print("\n");
+          print(pref.getBool('isLoggedIn'));
+          print("\n");
+          print(pref.getBool('carpool'));
+        }).catchError((e) {
+          print(e);
+        });
+
+      // go to home screen
       Timer(Duration(seconds: 2), () {
         Navigator.pop(context);
         Navigator.pushReplacementNamed(context, '/homescreen');
