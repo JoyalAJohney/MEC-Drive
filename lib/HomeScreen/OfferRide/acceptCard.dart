@@ -91,7 +91,7 @@ class _AcceptCardState extends State<AcceptCard> {
               elevation: 3,
               color: Colors.green,
               textColor: Colors.white,
-              child: Text("Accept Ride",style: TextStyle(
+              child: Text("Offer Ride",style: TextStyle(
                 fontSize: 18,
                 // fontWeight: FontWeight.bold,
               ),),

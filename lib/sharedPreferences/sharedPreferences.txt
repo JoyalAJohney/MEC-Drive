@@ -1,0 +1,20 @@
+  
+
+
+  saveUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('userName', name);
+
+    prefs.setInt('userPhone', phone);
+
+    prefs.setString('userBranch', branch);
+
+    prefs.setString('userYear', year);
+
+    if (carpool == 1)
+      prefs.setBool('carpool', true);
+    else
+      prefs.setBool('carpool', false);
+      
+  }

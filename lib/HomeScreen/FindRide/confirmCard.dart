@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -48,6 +46,7 @@ class _ConfirmCardState extends State<ConfirmCard> {
 
 
   void _confirmRide(BuildContext context) async {
+    
     // alertbox
     final alertDialog = AlertDialog(
       content: Row(
@@ -67,7 +66,8 @@ class _ConfirmCardState extends State<ConfirmCard> {
       ),
     );
     showDialog(
-      context: context, builder: (BuildContext context) => alertDialog
+      context: context, builder: (BuildContext context) => alertDialog,
+      barrierDismissible: false,
     );
 
     // Snackbar
