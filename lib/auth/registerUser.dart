@@ -15,25 +15,36 @@ class _SignUpState extends State<SignUp> {
 
   // Form field variables
   String name = "";
-  int phone = 0;
+  String phone = "";
   String branch = "CSA";
   String year = '1';
   int carpool;
 
 
   // Save user information in shared preferences
-  saveUserInfo() async {
+  void saveUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userName', name);
-    prefs.setInt('userPhone', phone);
+    prefs.setString('userPhone', phone);
     prefs.setString('userBranch', branch);
     prefs.setString('userYear', year);
     if (carpool == 1)
       prefs.setBool('carpool', true);
     else
       prefs.setBool('carpool', false);
+
+    print("stored user details in local storage");
   }
 
+
+  //save user id from response in local storage
+  void userRegistered(Map<String,dynamic> responseData) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('token', responseData['_id']);
+    pref.setBool('isLoggedIn', true);
+
+    print("stored user id in local storage");
+  }
 
   // Submit the user details to database
   void _submitForm(BuildContext context) async {
@@ -50,7 +61,7 @@ class _SignUpState extends State<SignUp> {
             width: 40.0,
           ),
           Text(
-            "Please wait",
+            "Sending Request",
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -62,15 +73,16 @@ class _SignUpState extends State<SignUp> {
     );
 
     //save user information in shared preferences
-    // saveUserInfo();
+    saveUserInfo();
 
-    String url = "http://192.168.0.103:8000/api/user/";
-    Map<String, dynamic> userDetails = {
-      "name": name,
-      "branch": branch,
-      "year": year,
-      "phone": phone,
-      "acceptedRides": []
+    String url = "http://192.168.43.112:8000/api/user/";
+    //single quotes are important
+    Map<String,dynamic> userDetails = {
+      'name'  : name,
+      'branch': branch,
+      'year'  : year,
+      'phone' : phone,
+      'acceptedRides': []
     };
 
     //send user sign up details to backend
@@ -84,12 +96,15 @@ class _SignUpState extends State<SignUp> {
 
       //set the unique id from response in sharedpreferences
       //set ifRegistered(bool)
+      userRegistered(responseData);
 
       //go to home screen
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(seconds: 2), () {
         Navigator.pop(context);
         Navigator.pushReplacementNamed(context, '/homescreen');
       });
+    }).catchError((e){
+      print(e);
     });
    
   }
@@ -157,7 +172,7 @@ class _SignUpState extends State<SignUp> {
                         validator: (value) {
                           if (value.isEmpty) return "Name field is required";
                         },
-                        onSaved: (val) {
+                        onChanged: (val) {
                           setState(() {
                             name = val;
                           });
@@ -171,9 +186,9 @@ class _SignUpState extends State<SignUp> {
                         validator: (value) {
                           if (value.isEmpty) return "Phone no is required";
                         },
-                        onSaved: (val) {
+                        onChanged: (val) {
                           setState(() {
-                            phone = int.parse(val);
+                            phone = val;
                           });
                         },
                       ),

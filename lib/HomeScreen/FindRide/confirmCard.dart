@@ -40,6 +40,8 @@ class _ConfirmCardState extends State<ConfirmCard> {
         Navigator.pop(context,snack);
       });
       
+    }).catchError((e) {
+      print(e);
     });
 
   }

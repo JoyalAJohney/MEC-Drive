@@ -1,5 +1,5 @@
   
-
+  //user Details
 
   saveUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -17,4 +17,16 @@
     else
       prefs.setBool('carpool', false);
       
+  }
+
+
+
+  //User id and logged in info
+  
+  void userRegistered(Map<String,dynamic> responseData) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    pref.setString('token', responseData['_id']);
+
+    pref.setBool('isLoggedIn', true);
   }
