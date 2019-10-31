@@ -91,7 +91,10 @@ class _RideRequestListState extends State<RideRequestList> {
             context: context,
             builder: (context) => 
             AcceptCard(_requests[index].destination,_requests[index].time,_requests[index].requestedUserId)
-          );
+          ).then((snack) => Scaffold.of(context).showSnackBar(snack)).
+          catchError((e) {
+            print(e);
+          });
         },
         child: Container(
           padding: EdgeInsets.all(5.0),

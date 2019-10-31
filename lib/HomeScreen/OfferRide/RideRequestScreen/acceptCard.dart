@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'setPrice.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -24,10 +27,10 @@ class _AcceptCardState extends State<AcceptCard> {
   void initState() {
     super.initState();
     //make a network call to get corresponding user details
-    getUserDetails();
+    _getUserDetails();
   }
 
-  getUserDetails() {
+  _getUserDetails() {
     http.get("http://192.168.43.112:8000/api/user/info/"+ widget.requestedUserId).
     then((response) {
       print(response.body);
@@ -39,6 +42,80 @@ class _AcceptCardState extends State<AcceptCard> {
        year = user["year"]; 
       });
     }).catchError((e){
+      print(e);
+    });
+  }
+
+  _offerRide(BuildContext context) {
+
+    // alertbox
+    final alertDialog = AlertDialog(
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
+          SizedBox(
+            width: 40.0,
+          ),
+          Text(
+            "Notifying user",
+            style: TextStyle(color: Colors.grey),
+          )
+        ],
+      ),
+    );
+    showDialog(
+      context: context, builder: (BuildContext context) => alertDialog,
+      barrierDismissible: false,
+    );
+
+
+    // Snackbar
+    final snack = SnackBar(
+      backgroundColor: Colors.green,
+      content: Text(
+        "Notified User!",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      duration: Duration(seconds: 4),
+    );
+
+    _postOfferRequest(snack);
+
+  }
+
+  _postOfferRequest(SnackBar snack) async {
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    String url = "http://192.168.43.112:8000/api/request/"+widget.requestedUserId;
+    Map<String,String> offerRequest = {
+      'driverId'  : pref.getString('token').toString(),
+      'location'  : widget.destination,
+      'time'      : widget.time,
+      'rate'      : price
+    };
+
+
+    //test code
+    http.put(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(offerRequest)
+    ).then((response) {
+      final Map<String,dynamic> responseData = json.decode(response.body);
+      print(responseData);
+
+      Timer(Duration(seconds: 3), () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop(snack);
+      });
+
+    }).catchError((e) {
       print(e);
     });
   }
@@ -128,7 +205,7 @@ class _AcceptCardState extends State<AcceptCard> {
                 fontSize: 18,
                 // fontWeight: FontWeight.bold,
               ),),
-              onPressed: () {},
+              onPressed: () => _offerRide(context), 
             ),
           )
         ],
