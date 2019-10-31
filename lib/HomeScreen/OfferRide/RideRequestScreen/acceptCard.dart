@@ -71,24 +71,11 @@ class _AcceptCardState extends State<AcceptCard> {
       barrierDismissible: false,
     );
 
-
-    // Snackbar
-    final snack = SnackBar(
-      backgroundColor: Colors.green,
-      content: Text(
-        "Notified User!",
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      duration: Duration(seconds: 4),
-    );
-
-    _postOfferRequest(snack);
+    _postOfferRequest();
 
   }
 
-  _postOfferRequest(SnackBar snack) async {
+  _postOfferRequest() async {
 
     SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -112,7 +99,7 @@ class _AcceptCardState extends State<AcceptCard> {
 
       Timer(Duration(seconds: 3), () {
         Navigator.of(context).pop();
-        Navigator.of(context).pop(snack);
+        Navigator.of(context).pop("success");
       });
 
     }).catchError((e) {
