@@ -10,7 +10,6 @@ class MyRides extends StatefulWidget {
 }
 
 class _MyRidesState extends State<MyRides> {
-
   // List that contains requests from users
   List<AcceptedRide> _rides = [];
 
@@ -18,20 +17,20 @@ class _MyRidesState extends State<MyRides> {
       GlobalKey<RefreshIndicatorState>();
   bool _isLoading = false;
 
-
   @override
   void initState() {
     super.initState();
     fetchRides();
   }
 
-
   Future<dynamic> fetchRides() async {
     _isLoading = false;
 
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    return http.get("http://192.168.43.112:8000/api/user/"+pref.getString('token')).then((response) {
+    return http
+        .get("http://192.168.43.112:8000/api/user/" + pref.getString('token'))
+        .then((response) {
       final List<AcceptedRide> fetchedRides = [];
       //responseData gives user's accepted rides list
       final List<dynamic> responseData = json.decode(response.body);
@@ -41,17 +40,17 @@ class _MyRidesState extends State<MyRides> {
         });
       }
       // print(responseData); //working till here
-      
+
       var length = responseData.length;
-      for (var i = 0; i < length; i++) { 
+      for (var i = 0; i < length; i++) {
         final AcceptedRide request = AcceptedRide(
-            acceptedDriverName: responseData[i]['driverName'],
-            acceptedDriverNumber: responseData[i]['driverPhone'],
-            destination: responseData[i]['location'],
-            time: responseData[i]['time'],
-            rate: responseData[i]['rate'],
-          );
-          fetchedRides.add(request);
+          acceptedDriverName: responseData[i]['driverName'],
+          acceptedDriverNumber: responseData[i]['driverPhone'],
+          destination: responseData[i]['location'],
+          time: responseData[i]['time'],
+          rate: responseData[i]['rate'],
+        );
+        fetchedRides.add(request);
       }
 
       setState(() {
@@ -71,7 +70,6 @@ class _MyRidesState extends State<MyRides> {
     return fetchRides();
   }
 
-
   Widget _buildRidesList() {
     return RefreshIndicator(
       onRefresh: _onRefresh,
@@ -84,8 +82,8 @@ class _MyRidesState extends State<MyRides> {
           Expanded(
             child: ListView.builder(
               itemCount: _rides.length,
-              itemBuilder: (BuildContext context,int index) {
-                return _ridesCards(context,index);
+              itemBuilder: (BuildContext context, int index) {
+                return _ridesCards(context, index);
               },
             ),
           )
@@ -94,42 +92,48 @@ class _MyRidesState extends State<MyRides> {
     );
   }
 
-
-  // // Cards showing user requests
+  // Cards showing accepted rides
   Widget _ridesCards(BuildContext context, int index) {
     return Card(
       elevation: 2,
-      child: GestureDetector(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage("assets/accountAvatar.jpg"),
-              radius: 25,
-            ),
-            title: Text(_rides[index].acceptedDriverName,style: TextStyle(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      child: ExpansionTile(
+        leading: CircleAvatar(
+          backgroundImage: AssetImage("assets/accountAvatar.jpg"),
+          radius: 25,
+        ),
+        title: ListTile(
+          title: Text(
+            _rides[index].acceptedDriverName,
+            style: TextStyle(
               color: Colors.black,
-            ),),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(_rides[index].destination+"-"+_rides[index].time),
-                Text(_rides[index].rate+" Rs"),
-              ],
-            ),
-            trailing: Text(
-              _rides[index].rate+" Rs",
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
             ),
           ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(_rides[index].destination + "-" + _rides[index].time),
+            ],
+          ),
         ),
+        trailing: Text(
+          _rides[index].rate + " Rs",
+          style: TextStyle(
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.phone),
+            title: GestureDetector(
+              child: Text(_rides[index].acceptedDriverNumber)),
+              onTap: (){},
+          )
+        ],
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +141,11 @@ class _MyRidesState extends State<MyRides> {
       appBar: AppBar(
         title: Text("My Rides"),
         backgroundColor: Colors.black,
-        centerTitle: true, 
+        centerTitle: true,
       ),
-      body: _isLoading?
-      Center(child: CircularProgressIndicator())
-      : _buildRidesList(),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _buildRidesList(),
     );
   }
 }
