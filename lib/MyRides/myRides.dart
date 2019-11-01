@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mecdrive_app/MyRides/acceptedRides.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../misc/convertTime.dart';
 
 class MyRides extends StatefulWidget {
   @override
@@ -112,7 +113,7 @@ class _MyRidesState extends State<MyRides> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(_rides[index].destination + "-" + _rides[index].time),
+              Text(_rides[index].destination + "-" + convertTimeTo12Hour(_rides[index].time)),
             ],
           ),
         ),
