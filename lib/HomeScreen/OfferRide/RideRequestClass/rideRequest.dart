@@ -12,4 +12,4 @@ class RideRequest {
     @required this.destination,
     @required this.time,
   });
-}
+} 

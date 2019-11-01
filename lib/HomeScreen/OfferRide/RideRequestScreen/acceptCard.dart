@@ -75,16 +75,17 @@ class _AcceptCardState extends State<AcceptCard> {
 
   }
 
-  _postOfferRequest() async {
+  _postOfferRequest() async { 
 
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     String url = "http://192.168.43.112:8000/api/request/"+widget.requestedUserId;
     Map<String,String> offerRequest = {
-      'driverId'  : pref.getString('token').toString(),
-      'location'  : widget.destination,
-      'time'      : widget.time,
-      'rate'      : price
+      'driverName'  : pref.getString('userName'),
+      'driverPhone' : pref.getString('userPhone'),
+      'location'    : widget.destination,
+      'time'        : widget.time,
+      'rate'        : price
     };
 
 

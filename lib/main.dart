@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mecdrive_app/HomeScreen/homeScreen.dart';
+import 'package:mecdrive_app/MyRides/myRides.dart';
 import 'package:mecdrive_app/auth/registerUser.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MecDrive',
       //test phase
-      home: HomeScreen(), 
+      home: MyRides(), 
       routes: {
         '/homescreen' : (context) => HomeScreen(),
       },
