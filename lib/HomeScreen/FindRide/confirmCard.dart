@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mecdrive_app/misc/convertTime.dart';
 import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -173,7 +174,8 @@ class _ConfirmCardState extends State<ConfirmCard> {
                       color: Colors.white,
                     ),
                   ),
-            subtitle: Text(widget.time.toString(),
+            subtitle: Text(
+              "Time : " + convertTimeTo12Hour(widget.time.toString()),
                         style: TextStyle(
                           color: Colors.white,
                         ),

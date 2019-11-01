@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'FindRide/findaRide.dart';
 import 'OfferRide/offerRide.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,9 +12,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    if(index == 1)
+      Navigator.pushNamed(context, '/myrides');
   }
 
   @override
@@ -40,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ],
           ),
-          title: Text("MEC Uber"),
+          title: Text("EverPool"),
         ),
         body: TabBarView(
           children: <Widget>[
@@ -57,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: Colors.black,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text("Home")),
+                icon: Icon(Icons.home),title: Text("Home")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.directions_bike), title: Text("My Rides")),
             BottomNavigationBarItem(

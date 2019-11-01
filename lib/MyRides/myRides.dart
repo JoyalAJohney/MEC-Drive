@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:mecdrive_app/MyRides/acceptedRides.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../misc/convertTime.dart';
+import '../misc/phoneCall.dart';
 
 class MyRides extends StatefulWidget {
   @override
@@ -97,7 +98,7 @@ class _MyRidesState extends State<MyRides> {
   Widget _ridesCards(BuildContext context, int index) {
     return Card(
       elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: ExpansionTile(
         leading: CircleAvatar(
           backgroundImage: AssetImage("assets/accountAvatar.jpg"),
@@ -110,26 +111,27 @@ class _MyRidesState extends State<MyRides> {
               color: Colors.black,
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(_rides[index].destination + "-" + convertTimeTo12Hour(_rides[index].time)),
-            ],
-          ),
+          subtitle: Text(_rides[index].destination + " : " + convertTimeTo12Hour(_rides[index].time)),
         ),
-        trailing: Text(
-          _rides[index].rate + " Rs",
-          style: TextStyle(
-            color: Colors.green,
-            fontWeight: FontWeight.bold,
+        trailing: Container(
+          child: Text(
+            _rides[index].rate + " Rs",
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.phone),
+            leading: Icon(
+              Icons.phone,
+              color: Colors.green,
+            ),
             title: GestureDetector(
               child: Text(_rides[index].acceptedDriverNumber)),
-              onTap: (){},
+              onTap: () => openPhone(_rides[index].acceptedDriverNumber)
           )
         ],
       ),

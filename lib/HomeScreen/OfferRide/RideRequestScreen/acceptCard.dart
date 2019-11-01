@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mecdrive_app/misc/convertTime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'setPrice.dart';
 import 'dart:convert';
@@ -148,7 +149,7 @@ class _AcceptCardState extends State<AcceptCard> {
               title: Text(widget.destination,style: TextStyle(
                 color: Colors.white,
               ),),
-              subtitle: Text("Time : " + widget.time,style: TextStyle(
+              subtitle: Text("Time : " + convertTimeTo12Hour(widget.time),style: TextStyle(
                 color: Colors.white,
               ),),
             ),

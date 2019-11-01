@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mecdrive_app/HomeScreen/OfferRide/RideRequestClass/rideRequest.dart';
+import 'package:mecdrive_app/misc/convertTime.dart';
 import 'acceptCard.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -116,7 +117,7 @@ class _RideRequestListState extends State<RideRequestList> {
               radius: 25,
             ),
             title: Text(_requests[index].destination),
-            subtitle: Text("Time: " + _requests[index].time),
+            subtitle: Text("Time: " + convertTimeTo12Hour(_requests[index].time)),
             trailing: accept == true
                 ? Icon(
                     Icons.check_circle,
