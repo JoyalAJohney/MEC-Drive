@@ -24,7 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
-          leading: Icon(Icons.account_circle),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/account');
+            },
+            child: Padding(
+              padding: EdgeInsets.all(12),
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/accountAvatar.jpg"),
+              )
+            ),
+          ),
           actions: <Widget>[
             PopupMenuButton(
               onSelected: (val) {
@@ -75,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.directions_bike), title: Text("My Rides")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text("My Requests")),
+                icon: Icon(Icons.list), title: Text("My Requests")),
           ],
         ),
       ),
