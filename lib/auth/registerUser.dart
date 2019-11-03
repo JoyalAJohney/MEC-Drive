@@ -130,7 +130,7 @@ class _SignUpState extends State<SignUp> {
               ),
               Image(
                 width: 320.0,
-                image: AssetImage("assets/SignUp2.jpg"),
+                image: AssetImage("assets/signUp.jpg"),
               )
             ],
           ),

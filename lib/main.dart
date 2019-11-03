@@ -10,9 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'MecDrive',
       //test phase
-      home: SplashScreen(), 
+      home: HomeScreen(), 
       routes: {
         '/homescreen' : (context) => HomeScreen(),
         '/register'   : (context) => SignUp(),

@@ -12,8 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
   void onTabTapped(int index) {
-    if(index == 1)
-      Navigator.pushNamed(context, '/myrides');
+    if (index == 1) Navigator.pushNamed(context, '/myrides');
   }
 
   @override
@@ -25,6 +24,23 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
+          leading: Icon(Icons.account_circle),
+          actions: <Widget>[
+            PopupMenuButton(
+              onSelected: (val) {
+                if(val == 1)
+                {
+                  //navigate to credits page
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 1,
+                  child: Text("Credits"),
+                )
+              ],
+            ),
+          ],
           bottom: TabBar(
             indicatorColor: Colors.white,
             tabs: <Widget>[
@@ -55,11 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: Colors.black,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),title: Text("Home")),
+                icon: Icon(Icons.home), title: Text("Home")),
             BottomNavigationBarItem(
                 icon: Icon(Icons.directions_bike), title: Text("My Rides")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), title: Text("Account")),
+                icon: Icon(Icons.account_circle), title: Text("My Requests")),
           ],
         ),
       ),
