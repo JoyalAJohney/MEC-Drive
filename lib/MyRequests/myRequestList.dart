@@ -66,6 +66,14 @@ class _MyRequestListState extends State<MyRequestList> {
     });
   }
 
+  deleteRequest(String id) {
+    http.delete("http://192.168.43.112:8000/api/request/" + id).then((response) {
+      print(response);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   Future<dynamic> _onRefresh() {
     return fetchRequests();
   }
@@ -85,35 +93,23 @@ class _MyRequestListState extends State<MyRequestList> {
 
   // Cards showing user requests
   Widget _requestCards(BuildContext context, int index) {
-    return Card(
-      elevation: 2,
-      child: GestureDetector(
-        // onTap: () {
-        //   showModalBottomSheet(
-        //       context: context,
-        //       builder: (context) => AcceptCard(
-        //           _requests[index].destination,
-        //           _requests[index].time,
-        //           _requests[index].requestedUserId)).then((check) {
-        //     if (check == "success") {
-        //       //Show Snackbar
-        //       final snack = SnackBar(
-        //         backgroundColor: Colors.green,
-        //         content: Text(
-        //           "Notified User!",
-        //           style: TextStyle(
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //         duration: Duration(seconds: 4),
-        //       );
-        //       Scaffold.of(context).showSnackBar(snack);
-
-        //     }
-        //   }).catchError((e) {
-        //     print(e);
-        //   });
-        // },
+    return Dismissible(
+      key: Key(UniqueKey().toString()), 
+      direction: DismissDirection.startToEnd,
+      background: Container(
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 10,
+            ),
+            Icon(Icons.delete,color: Colors.white),
+          ],
+        ),
+      ),
+      child: Card(
+        elevation: 2,
         child: Container(
           padding: EdgeInsets.all(5.0),
           child: ListTile(
@@ -135,6 +131,41 @@ class _MyRequestListState extends State<MyRequestList> {
           ),
         ),
       ),
+      confirmDismiss: (DismissDirection direction) async {
+        final bool res = await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Confirm"),
+              content: Text("Are you sure you wish to delete this request?"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("delete"),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+                FlatButton(
+                  child: Text("cancel"),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+              ],
+            );
+          }
+        );
+        return res;
+      },
+      onDismissed: (direction) {
+         //send a delete request
+        String requestId = _requests[index].requestId;
+        deleteRequest(requestId);
+
+        setState(() {
+         _requests.removeAt(index); 
+        });
+
+        Scaffold
+        .of(context)
+        .showSnackBar(SnackBar(content: Text("Request deleted"),backgroundColor: Colors.black,));
+      },
     );
   }
 
@@ -152,19 +183,21 @@ class _MyRequestListState extends State<MyRequestList> {
               padding: EdgeInsets.all(8),
               child: Container(
                 child: Center(
-                  child: Text("Swipe to delete",style: TextStyle(
-                    color: Colors.grey,
-                  ),),
+                  child: Text(
+                    "Swipe to delete",
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
               ),
             ),
             Expanded(
               child: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : _buildRequestList(),
+                  ? Center(child: CircularProgressIndicator())
+                  : _buildRequestList(),
             ),
           ],
-        )
-      );
+        ));
   }
 }
