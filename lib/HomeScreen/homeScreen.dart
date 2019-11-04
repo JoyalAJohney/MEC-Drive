@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void onTabTapped(int index) {
     if (index == 1) Navigator.pushNamed(context, '/myrides');
+    if (index == 2) Navigator.pushNamed(context, '/myrequests');
   }
 
   @override
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.directions_bike), title: Text("My Rides")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.list), title: Text("My Requests")),
+                icon: Icon(Icons.class_), title: Text("My Requests")),
           ],
         ),
       ),

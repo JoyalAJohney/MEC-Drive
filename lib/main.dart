@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mecdrive_app/HomeScreen/homeScreen.dart';
+import 'package:mecdrive_app/MyRequests/myRequestList.dart';
 import 'package:mecdrive_app/MyRides/myRides.dart';
 import 'package:mecdrive_app/SplashScreen/splashScreen.dart';
 import 'package:mecdrive_app/UserProfile/accountScreen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/register'   : (context) => SignUp(),
         '/myrides'    : (context) => MyRides(),
         '/account'    : (context) => AccountScreen(),
+        '/myrequests' : (context) => MyRequestList(),
       },
     );
   }
