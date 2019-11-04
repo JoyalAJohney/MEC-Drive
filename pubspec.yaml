@@ -49,6 +49,10 @@ flutter:
    - assets/accountAvatar.jpg
    - assets/carRegister.jpg
    - assets/signUp.jpg
+   - assets/joyal.jpg
+   - assets/steeve.jpg
+   - assets/nikhil.jpg
+   - assets/account.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

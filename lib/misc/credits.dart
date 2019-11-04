@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 class Credits extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _CreditsState createState() => _CreditsState();
 }
 
-class _MyHomePageState extends State<Credits> {
+class _CreditsState extends State<Credits> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
         title: Text(
-          'Credits',
+          'Absolute™',
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         backgroundColor: Colors.black,
@@ -24,9 +24,15 @@ class _MyHomePageState extends State<Credits> {
             Center(
               child: Column(
                 children: <Widget>[
-                  profile('John Doe', 'assets/profilepic.jpeg', 'Computer Science'),
-                  profile('Bftfsdf', 'assets/profilepic.jpeg', 'CSasdasd'),
-                  profile('Cadasd', 'assets/profilepic.jpeg', 'CSasdasd'),
+                  profile('Joyal A Johney', 'assets/joyal.jpg', 'Computer Science'),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height/50,
+                  ),
+                  profile('Steev James', 'assets/steeve.jpg', 'Computer Science'),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height/50,
+                  ),
+                  profile('Nikhil Babu', 'assets/nikhil.jpg', 'Computer Science'),
                 ],
               ),
             ),
@@ -42,13 +48,14 @@ Widget profile(name, image, dept) {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
       Container(
-        width: 140,
-        height: 140,
+        width: 120,
+        height: 120,
         decoration: BoxDecoration(
-            color: Colors.red,
+            color: Colors.black,
             image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
             borderRadius: BorderRadius.all(Radius.circular(75.0)),
-            boxShadow: [BoxShadow(blurRadius: 9.0, color: Colors.black)]),
+            // boxShadow: [BoxShadow(blurRadius: 9.0, color: Colors.black)]),
+        ),
       ),
       Container(
         child: ListTile(

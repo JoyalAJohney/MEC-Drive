@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           leading: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed('/account');
+              Navigator.of(context).pushNamed('/profile');
             },
             child: Padding(
               padding: EdgeInsets.all(12),
@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if(val == 1)
                 {
                   //navigate to credits page
+                  Navigator.of(context).pushNamed('/credits');
                 }
               },
               itemBuilder: (context) => [
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ],
           ),
-          title: Text("EverPool"),
+          title: Text("MEC Drive"),
         ),
         body: TabBarView(
           children: <Widget>[

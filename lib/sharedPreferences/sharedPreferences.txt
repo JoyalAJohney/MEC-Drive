@@ -6,7 +6,7 @@
 
     prefs.setString('userName', name);
 
-    prefs.setInt('userPhone', phone);
+    prefs.setString('userPhone', phone);
 
     prefs.setString('userBranch', branch);
 
