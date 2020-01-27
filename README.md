@@ -2,7 +2,7 @@
 
 MEC-Drive is a carpool application built for college students (MEC-ians) to promote shared travelling among college students. The application is currently in prototype stage. The application performs basic functionalities like authentication,send a ride request,accepting ride requests,contact students who has accepted the requests and delete ride requests.
 
-<img src="https://raw.githubusercontent.com/JoyalAJohney/MEC-Drive/master/assets/Screenshots/SplashScreen.png" width="300" height="600" title="hover text">
+<img src="https://raw.githubusercontent.com/JoyalAJohney/MEC-Drive/master/assets/Screenshots/SplashScreen.png" width="300" height="600" title="hover text"> <img src="https://raw.githubusercontent.com/JoyalAJohney/MEC-Drive/master/assets/Screenshots/Login.png" width="300" height="600" title="hover text"> <img src="https://raw.githubusercontent.com/JoyalAJohney/MEC-Drive/master/assets/Screenshots/FindRide.png" width="300" height="600" title="hover text">
 
 ## Getting Started
 
